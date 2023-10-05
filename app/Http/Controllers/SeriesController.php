@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Serie;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
     public function index(Request $request)
     {
-        $series = [
-            'Game of Thrones',
-            'House of Dragon',
-            'Snow'
-        ];
+        $series = Serie::all();
 
         return view('series.index')->with('series', $series);
     }
@@ -22,15 +19,15 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $serieName = $request->input('name');
+
+        $serie = new Serie();
+        $serie->name = $serieName;
+        $serie->save();
+
+        return redirect('/series');
     }
 
     /**
