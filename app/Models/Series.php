@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Serie extends Model
+class Series extends Model
 {
     use HasFactory;
 
@@ -21,7 +21,7 @@ class Serie extends Model
      *
      * @return void
      */
-    public function season()
+    public function seasons()
     {
         return $this->hasMany(Season::class, 'series_id');
     }

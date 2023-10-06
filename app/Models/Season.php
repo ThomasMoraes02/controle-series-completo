@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Serie;
+use App\Models\Series;
 use App\Models\Episode;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +11,10 @@ class Season extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'number',
+    ];
+
     /**
      * belongsTo - Pertece a uma serie
      *
@@ -18,7 +22,7 @@ class Season extends Model
      */
     public function series()
     {
-       return $this->belongsTo(Serie::class); 
+       return $this->belongsTo(Series::class); 
     }
 
     /**

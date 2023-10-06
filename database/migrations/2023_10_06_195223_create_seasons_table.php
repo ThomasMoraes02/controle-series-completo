@@ -17,7 +17,7 @@ class CreateSeasonsTable extends Migration
             $table->id();
             $table->unsignedTinyInteger('number');
 
-            $table->foreignId('serie_id')->constrained();
+            $table->foreignId('series_id')->constrained()->onDelete('cascade');
 
             // $table->unsignedBigInteger('series_id');
             // $table->foreign('series_id')->references('id')->on('series');

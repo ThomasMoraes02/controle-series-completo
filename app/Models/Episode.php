@@ -11,6 +11,10 @@ class Episode extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'number',
+    ];
+
     /**
      * belongsTo - Pertece a uma temporada
      *
