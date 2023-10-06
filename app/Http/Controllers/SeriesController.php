@@ -28,22 +28,20 @@ class SeriesController extends Controller
         return redirect()->route('series.index')->with('message.success', "Serie '{$serie->name}' criada com sucesso!");
     }
 
-    public function show($id)
+    public function edit(Serie $series)
     {
-        
+        return view('series.edit')->with('serie', $series);
     }
 
-    public function edit($id)
+    public function update(Request $request, Serie $series)
     {
-        
+        $series->fill($request->all());
+        $series->save();
+
+        return redirect()->route('series.index')->with('message.success', "Série '{$series->name}' alterada com sucesso!");
     }
 
-    public function update(Request $request, $id)
-    {
-        
-    }
-
-    public function destroy(Serie $series, Request $request)
+    public function destroy(Request $request, Serie $series)
     {
         $series->delete();
         return redirect()->route('series.index')->with('message.success', 'Série removida com sucesso!');
