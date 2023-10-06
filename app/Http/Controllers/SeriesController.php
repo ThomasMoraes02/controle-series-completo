@@ -24,6 +24,10 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|min:3',
+        ]);
+
         $serie = Serie::create($request->all());
         return redirect()->route('series.index')->with('message.success', "Serie '{$serie->name}' criada com sucesso!");
     }
