@@ -10,8 +10,11 @@ class SeriesController extends Controller
     public function index(Request $request)
     {
         $series = Serie::all();
+        $successMessage = session('message.success');
 
-        return view('series.index')->with('series', $series);
+        return view('series.index')
+        ->with('series', $series)
+        ->with('successMessage', $successMessage);
     }
 
     public function create()
@@ -21,49 +24,28 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
-        Serie::create($request->all());
-
-        return redirect()->route('series.index');
+        $serie = Serie::create($request->all());
+        return redirect()->route('series.index')->with('message.success', "Serie '{$serie->name}' criada com sucesso!");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
-    public function destroy(Serie $series)
+    public function destroy(Serie $series, Request $request)
     {
-        Serie::destroy($series->id);
-
-        return redirect()->route('series.index');
+        $series->delete();
+        return redirect()->route('series.index')->with('message.success', 'Série removida com sucesso!');
     }
 }
