@@ -18,8 +18,6 @@ class Series extends Model
     /**
      * HasMany - 1 para Muitos
      * (Uma série possui várias temporadas)
-     *
-     * @return void
      */
     public function seasons()
     {
@@ -28,8 +26,6 @@ class Series extends Model
 
     /**
      * Ordenando a busca quando o Eloquent usa o All
-     *
-     * @return void
      */
     public static function booted()
     {
