@@ -29,10 +29,15 @@ class Season extends Model
      * hasMany - 1 para muitos
      * (Uma temporada tem vários episódios)
      *
-     * @return void
+     * @return
      */
     public function episodes()
     {
         return $this->hasMany(Episode::class);
+    }
+
+    public function numberOfWatchedEpisodes(): int
+    {
+        return $this->episodes()->where('watched', true)->count();
     }
 }
