@@ -10,6 +10,22 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ route('series.index') }}">Home</a>
+
+            {{-- Só mostra se existir usuário ativo na sessão --}}
+            @auth
+                <a href="{{ route('logout') }}" class="navbar-brand">Sair</a>
+            @endauth
+
+            {{-- Caso não exista usuário logado --}}
+            @guest
+                <a href="{{ route('login') }}" class="navbar-brand">Entrar</a>
+            @endguest
+        </div>
+    </nav>
+
     <div class="container">
         <h1>{{ $title }}</h1>
 
