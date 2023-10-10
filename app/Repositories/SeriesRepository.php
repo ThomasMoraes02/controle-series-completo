@@ -6,5 +6,5 @@ use App\Http\Requests\SeriesFormRequest;
 
 interface SeriesRepository
 {
-    public function add(SeriesFormRequest $request): Series;
+    public function add(SeriesFormRequest $request, ?string $coverPath = null): Series;
 }

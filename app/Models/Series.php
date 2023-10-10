@@ -12,7 +12,7 @@ class Series extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name', 'cover'
     ];
 
     /**

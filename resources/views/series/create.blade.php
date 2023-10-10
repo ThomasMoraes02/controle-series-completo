@@ -1,7 +1,7 @@
 <x-layout title="Nova Série">
     {{-- <x-series.form :action="route('series.store')" :name="old('name')" :buttonName="'Salvar'" /> --}}
 
-    <form action="{{ route('series.store') }}" method="post">
+    <form action="{{ route('series.store') }}" method="post" enctype="multipart/form-data">
         @csrf
 
         <div class="row mb-3">
@@ -19,6 +19,12 @@
                 <label for="episodesPerSeason" class="form-label">Eps Temporada:</label>
                 <input type="number" name="episodesPerSeason" id="episodesPerSeason" class="form-control"
                     @isset($episodesPerSeason) value="{{ old('episodesPerSeason') }}" @endisset>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-12">
+                <label for="cover">Capa</label>
+                <input type="file" name="cover" id="cover" class="form-control" accept="image/png,image/jpeg">
             </div>
         </div>
 
