@@ -34,9 +34,9 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $coverPath = $request->file('cover')->store('series_cover', 'public');
+        $coverPath = $request->hasFile('cover') ? $request->file('cover')->store('covers') : null;
 
-        $serie = $this->seriesRepository->add($request, $coverPath ?? null);
+        $serie = $this->seriesRepository->add($request, $coverPath);
 
         // Evento
         SeriesCreated::dispatch($serie->id, $serie->name, $request->seasonsQty, $request->episodesPerSeason);
