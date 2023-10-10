@@ -6,6 +6,7 @@ use App\Models\Series;
 use Illuminate\Http\Request;
 use App\Http\Requests\SeriesFormRequest;
 use App\Mail\SeriesCreated;
+use App\Models\User;
 use App\Repositories\SeriesRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -37,15 +38,20 @@ class SeriesController extends Controller
     public function store(SeriesFormRequest $request)
     {
         $serie = $this->seriesRepository->add($request);
+        
+        $userList = User::all();
+        foreach($userList as $user) {
+            $email = new SeriesCreated(
+                $serie->id, 
+                $serie->name, 
+                $request->seasonsQty, 
+                $request->episodesPerSeason
+            );
 
-        $email = new SeriesCreated(
-            $serie->id, 
-            $serie->name, 
-            $request->seasonsQty, 
-            $request->episodesPerSeason
-        );
+            Mail::to($user)->send($email);
 
-        Mail::to(Auth::user())->send($email);
+            sleep(2);
+        }
 
         return redirect()->route('series.index')->with('message.success', "Serie '{$serie->name}' criada com sucesso!");
     }

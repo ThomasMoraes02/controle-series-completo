@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use App\Mail\SeriesCreated;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,4 +64,34 @@ require __DIR__.'/auth.php';
 
 Route::get('/email', function() {
     return new SeriesCreated(4, 'The Witcher', 20, 50);
+});
+
+/**
+ * Criando usuários
+ */
+Route::get("/test-create-users", function() {
+    $users = [
+        [
+            'name' => 'Bolt Moraes',
+            'email' => 'bolt@gmail.com',
+        ],
+        [
+            'name' => 'Joice Moraes',
+            'email' => 'joice@gmail.com',
+        ]
+        // [
+        //     'name' => 'Isabella Moraes',
+        //     'email' => 'isabella@gmail.com',
+        // ]
+    ];
+
+    foreach($users as $user) {
+        $userCreated = User::create([
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'password' => Hash::make(123456),
+        ]);
+
+        var_dump($userCreated);
+    }
 });
