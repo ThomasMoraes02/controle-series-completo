@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\SeriesCreated;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,3 +59,7 @@ require __DIR__.'/auth.php';
 //     Route::get('/series/create','create')->name('series.create');
 //     Route::post('/series/store','store')->name('series.store');
 // });
+
+Route::get('/email', function() {
+    return new SeriesCreated(4, 'The Witcher', 20, 50);
+});
