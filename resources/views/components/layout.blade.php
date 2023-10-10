@@ -16,8 +16,15 @@
             <a class="navbar-brand" href="{{ route('series.index') }}">Home</a>
 
             {{-- Só mostra se existir usuário ativo na sessão --}}
-            @auth
+            {{-- @auth
                 <a href="{{ route('logout') }}" class="navbar-brand">Sair</a>
+            @endauth --}}
+            
+            @auth
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"  class="navbar-brand">{{ __('Log Out') }}</a>
+            </form>
             @endauth
 
             {{-- Caso não exista usuário logado --}}
