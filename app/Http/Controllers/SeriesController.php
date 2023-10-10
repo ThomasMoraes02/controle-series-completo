@@ -8,6 +8,7 @@ use App\Http\Requests\SeriesFormRequest;
 use App\Mail\SeriesCreated;
 use App\Models\User;
 use App\Repositories\SeriesRepository;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -40,7 +41,7 @@ class SeriesController extends Controller
         $serie = $this->seriesRepository->add($request);
         
         $userList = User::all();
-        foreach($userList as $user) {
+        foreach($userList as $index => $user) {
             $email = new SeriesCreated(
                 $serie->id, 
                 $serie->name, 
@@ -48,9 +49,8 @@ class SeriesController extends Controller
                 $request->episodesPerSeason
             );
 
-            Mail::to($user)->send($email);
-
-            sleep(2);
+            $when = now()->addSeconds($index * 5);
+            Mail::to($user)->later($when, $email);
         }
 
         return redirect()->route('series.index')->with('message.success', "Serie '{$serie->name}' criada com sucesso!");
