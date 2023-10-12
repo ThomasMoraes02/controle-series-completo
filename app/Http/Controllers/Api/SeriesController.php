@@ -13,9 +13,14 @@ class SeriesController extends Controller
     public function __construct(private SeriesRepository $seriesRepository)
     {}
 
-    public function index()
+    public function index(Request $request)
     {
-        return Series::all();
+        $query = Series::query();
+        if($request->has('name')) {
+            $query->where('name', $request->name);
+        }
+
+        return $query->paginate(5);
     }
 
     public function store(SeriesFormRequest $request)
@@ -42,7 +47,7 @@ class SeriesController extends Controller
         return $series;
     }
 
-    public function destroy(Series $series)
+    public function destroy(int $series)
     {
         Series::destroy($series);
 

@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Season;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Series extends Model
@@ -13,6 +14,10 @@ class Series extends Model
 
     protected $fillable = [
         'name', 'cover'
+    ];
+
+    protected $appends = [
+        'links'
     ];
 
     /**
@@ -37,5 +42,23 @@ class Series extends Model
     public function episodes()
     {
         return $this->hasManyThrough(Episode::class, Season::class);
+    }
+
+    public function links(): Attribute
+    {
+        return new Attribute(get: fn () => [
+            [
+                'rel' => 'self',
+                'url' => "/api/v1/series/{$this->id}",
+            ],
+            [
+                'rel' => 'seasons',
+                'url' => "/api/v1/series/{$this->id}/seasons",
+            ],
+            [
+                'rel' => 'episodes',
+                'url' => "/api/v1/series/{$this->id}/episodes",
+            ],
+        ]);
     }
 }
