@@ -33,4 +33,9 @@ class Series extends Model
             $queryBuilder->orderBy('name', 'asc');
         });
     }
+
+    public function episodes()
+    {
+        return $this->hasManyThrough(Episode::class, Season::class);
+    }
 }
